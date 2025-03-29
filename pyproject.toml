@@ -1,0 +1,26 @@
+[project]
+name = "kairix-mem"
+version = "0.1.0"
+description = "Reflective tiered memory for AI systems"
+requires-python = ">=3.10"
+
+[tool.uv]
+virtualenvs.in-project = true
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+
+[tool.kairix.scripts]
+lint = "black . && isort ."
+typecheck = "mypy src/"
+test = "pytest --cov=src --cov-report=term-missing"
+dev = "python src/main.py"
+precheck = "bash scripts/precheck.sh"
+bug = "bash scripts/new_bug.sh"

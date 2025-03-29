@@ -1,0 +1,79 @@
+title,body,assignee,labels
+P1.0.1 – Set up local dev environment with uv,"Your task is to guide a developer through setting up the Kairix-Mem environment using `uv` and `venv`.
+
+You MUST:
+- Use `uv venv` and `.venv` structure
+- Show how to activate the environment and install dependencies
+- Include validations for setup (Python version, virtualenv check)
+
+Reference CONTRIBUTING.md and ensure strict adherence to `pyproject.toml` workflows.",,"setup,feature,ready"
+P1.0.2 – Add scripts and CI hooks,"Help define and implement the required CI and script structure for Kairix-Mem.
+
+You MUST:
+- Set up `.git/hooks/pre-commit`
+- Create `scripts/precheck.sh` with full checks
+- Follow CONTRIBUTING.md guidance on verbose precheck output
+
+Return the complete shell script and confirm file permissions.",,"ops,feature,ready"
+P1.1.1 – Define SQL schema for message events,"Define a SQL schema for message events: message_id (UUID), timestamp, user_id, content, tags.
+
+You MUST:
+- Follow TDD
+- Include a schema definition and tests
+- Use typing, logging, docstrings
+
+No fallback or dynamic schema logic allowed.",,"foundation,feature,ready"
+P1.1.2 – Implement DB migration and schema test,"Create a migration or setup script to initialize the database using the message schema.
+
+You MUST:
+- Include a unit test that verifies schema structure
+- Fail fast if the DB cannot be created
+- Follow all doc and typing standards.",,"foundation,test,ready"
+P1.2.1 – Design reflection agent prompt,"Define the LLM prompt template for reflection agent.
+
+MUST:
+- Include 4 document outputs (insights.md, themes.md, etc.)
+- Read both raw logs and past reflections
+- Format prompt as reusable function
+
+Test should assert structure + prompt parts.",,"reflection,feature,ready"
+P1.2.2 – Implement prompt executor + writer,"Take the prompt definition and wrap it in an execution function that runs offline.
+
+MUST:
+- Write outputs to disk
+- Handle diffing with prior reflections
+- Log key steps
+
+Test must validate file output format and overwrite behavior.",,"reflection,feature,ready"
+P1.3.1 – Select embedding model + load lib,"Choose a local or cloud embedding model (OpenAI, Hugging Face, etc.).
+
+MUST:
+- Fail fast if not available
+- Include helper with docstring + example usage",,"embedding,setup,ready"
+P1.3.3 – Implement in-memory vector store,"Create an in-memory embedding store.
+
+MUST:
+- Store doc ID + vector
+- Provide `add()` and `query()` functions
+- Follow typing, logging, and TDD.",,"embedding,feature,ready"
+P1.4.1 – Implement memory-based context assembler,"Create function to generate prompt from retrieved memory fragments.
+
+MUST:
+- Accept user query + top-k retrieved docs
+- Assemble full prompt string
+- Include test for formatting output and fragment inclusion",,"assembly,feature,ready"
+P1.5.1 – Implement CLI for chat interaction,"Set up minimal CLI app that supports:
+- User input
+- Output from LLM
+- Injected memory prompt
+
+Follow TDD. Include examples. No web server needed yet.",,"ui,feature,ready"
+P1.6.1 – Read-only memory dashboard CLI,"Create a basic CLI dashboard to list contents of insights.md, events.md, etc.
+
+MUST:
+- Support viewing each doc type
+- Format with color or headers
+- Allow filtering by doc type or date",,"dashboard,feature,ready"
+P1.7.1 – Run precheck + full coverage audit,"Final QA step. Ensure full `uv run precheck` passes. Output results.
+
+Report test coverage, mypy errors, black/isort issues. PR can’t merge unless 100% green.",,"qa,test,ready"
