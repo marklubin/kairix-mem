@@ -1,5 +1,5 @@
-from datetime import date, datetime
 import uuid
+from datetime import date, datetime
 from typing import List, Optional
 
 import pytest
@@ -18,9 +18,9 @@ def test_task_model() -> None:
         completed=False,
         created_at=created_at,
         tags=[],
-        reminders=[]
+        reminders=[],
     )
-    
+
     assert task.id == task_id
     assert task.title == "Test Task"
     assert task.completed is False
@@ -36,7 +36,7 @@ def test_task_model_with_optional_fields() -> None:
     task_id = uuid.uuid4()
     created_at = datetime.now()
     due_date = date.today()
-    
+
     task = Task(
         id=task_id,
         title="Test Task with Optional Fields",
@@ -45,9 +45,9 @@ def test_task_model_with_optional_fields() -> None:
         due_date=due_date,
         additional_details="These are additional details",
         tags=[],
-        reminders=[]
+        reminders=[],
     )
-    
+
     assert task.id == task_id
     assert task.title == "Test Task with Optional Fields"
     assert task.completed is True
@@ -61,7 +61,7 @@ def test_task_model_with_optional_fields() -> None:
 def test_task_create_model() -> None:
     """Test the TaskCreate model with minimal fields."""
     task_create = TaskCreate(title="New Task")
-    
+
     assert task_create.title == "New Task"
     assert task_create.completed is False
     assert task_create.due_date is None
@@ -73,15 +73,15 @@ def test_task_create_model_with_all_fields() -> None:
     """Test the TaskCreate model with all fields."""
     tag_ids = [uuid.uuid4(), uuid.uuid4()]
     due_date = date.today()
-    
+
     task_create = TaskCreate(
         title="New Task with All Fields",
         completed=True,
         due_date=due_date,
         additional_details="Additional info",
-        tag_ids=tag_ids
+        tag_ids=tag_ids,
     )
-    
+
     assert task_create.title == "New Task with All Fields"
     assert task_create.completed is True
     assert task_create.due_date == due_date
@@ -92,7 +92,7 @@ def test_task_create_model_with_all_fields() -> None:
 def test_task_update_model() -> None:
     """Test the TaskUpdate model with no fields set."""
     task_update = TaskUpdate()
-    
+
     assert task_update.title is None
     assert task_update.completed is None
     assert task_update.due_date is None
@@ -104,15 +104,15 @@ def test_task_update_model_with_fields() -> None:
     """Test the TaskUpdate model with fields set."""
     tag_ids = [uuid.uuid4(), uuid.uuid4()]
     due_date = date.today()
-    
+
     task_update = TaskUpdate(
         title="Updated Task",
         completed=True,
         due_date=due_date,
         additional_details="Updated details",
-        tag_ids=tag_ids
+        tag_ids=tag_ids,
     )
-    
+
     assert task_update.title == "Updated Task"
     assert task_update.completed is True
     assert task_update.due_date == due_date
