@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "todo-api"
+version = "0.1.0"
+description = "FastAPI Todo List Application"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.100.0",
+    "pydantic>=2.0.0",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.10.0", 
+    "uvicorn>=0.22.0",
+    "pytest>=7.3.1",
+    "pytest-cov>=4.1.0",
+]
+
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+strict = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_ignores = true
+warn_unused_configs = true
+warn_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.scripts]
+lint = "black . && isort ."
+typecheck = "mypy src/todo_api/"
+test = "pytest tests/ --cov=todo_api --cov-report=term-missing"
+test-models = "pytest tests/models/ -v"
+test-task = "pytest tests/models/test_task.py -v"
+test-tag = "pytest tests/models/test_tag.py -v"
+dev = "uvicorn todo_api.main:app --reload"
+precheck = "black . --check && isort . --check-only && mypy src/todo_api/ && pytest tests/"
