@@ -5,9 +5,8 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-from todo_api.db.models import Base, Task, Tag, Reminder
+from todo_api.db.models import Base, Reminder, Tag, Task
 from todo_api.db.session import get_db
-
 
 # Use in-memory SQLite for testing
 DATABASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -26,9 +25,7 @@ async def db_engine():
 @pytest.fixture
 async def db_session(db_engine):
     """Create a test database session."""
-    async_session = sessionmaker(
-        db_engine, class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(db_engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
 

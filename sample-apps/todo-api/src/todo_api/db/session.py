@@ -6,14 +6,10 @@ from sqlalchemy.orm import sessionmaker
 from todo_api.config import settings
 
 # Create async engine according to the settings
-engine = create_async_engine(
-    settings.DATABASE_URL, echo=settings.SQL_ECHO, future=True
-)
+engine = create_async_engine(settings.DATABASE_URL, echo=settings.SQL_ECHO, future=True)
 
 # Create session factory
-async_session_maker = sessionmaker(
-    engine, class_=AsyncSession, expire_on_commit=False
-)
+async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:

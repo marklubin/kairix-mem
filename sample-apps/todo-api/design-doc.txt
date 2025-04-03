@@ -1,0 +1,130 @@
+ Todo API Design Document
+
+  Data Model
+
+  Task
+
+  - id: UUID (primary key)
+  - title: String (required)
+  - completed: Boolean (default: False)
+  - created_at: DateTime (auto-generated)
+  - due_date: Date (optional)
+  - additional_details: Text (optional)
+  - tags: Relationship to Tags (many-to-many)
+  - reminders: Relationship to Reminders (one-to-many)
+
+  Tag
+
+  - id: UUID (primary key)
+  - name: String (unique, required)
+  - tasks: Relationship to Tasks (many-to-many)
+
+  Reminder
+
+  - id: UUID (primary key)
+  - task_id: UUID (foreign key to Task)
+  - remind_at: DateTime (required)
+  - completed: Boolean (default: False)
+
+  APIKey
+
+  - key: String (primary key)
+  - description: String (optional)
+  - created_at: DateTime (auto-generated)
+
+  Operations
+
+  Task Operations
+
+  - Create task (with optional tags, due date, details)
+  - Get task by ID
+  - Update task
+  - Delete task
+  - List all tasks
+  - Search tasks by text query
+  - Filter tasks by:
+    - Tags (AND/OR)
+    - Due date
+    - Completion status
+
+  Tag Operations
+
+  - Create tag
+  - Get tag by ID
+  - Update tag
+  - Delete tag
+  - List all tags
+
+  Reminder Operations
+
+  - Create reminder for task
+  - Get reminder by ID
+  - Update reminder
+  - Delete reminder
+  - List reminders for task
+  - Get upcoming reminders
+
+  Auth Operations
+
+  - Validate API key
+  - List available API keys (admin only)
+
+  Technical Components
+
+  Database
+
+  - SQLite database
+  - Location configurable via config file
+  - Schema migrations handled by Alembic
+
+  Authentication
+
+  - API Key based authentication
+  - Keys configured in config file
+  - Header-based authentication (X-API-Key)
+
+  Search
+
+  - Full-text search on task title and additional_details
+  - Implemented using SQLite FTS5 extension
+
+  API
+
+  - RESTful API built with FastAPI
+  - OpenAPI documentation
+  - JSON response format
+
+  Configuration
+
+  - Config file for:
+    - Database location/connection
+    - API keys
+    - Logging settings
+    - Other app settings
+
+  API Endpoints
+
+  Tasks
+
+  - GET /tasks - List all tasks (with filtering options)
+  - POST /tasks - Create new task
+  - GET /tasks/{task_id} - Get task details
+  - PUT /tasks/{task_id} - Update task
+  - DELETE /tasks/{task_id} - Delete task
+  - GET /tasks/search - Search tasks by text
+
+  Tags
+
+  - GET /tags - List all tags
+  - POST /tags - Create new tag
+  - GET /tags/{tag_id} - Get tag details
+  - PUT /tags/{tag_id} - Update tag
+  - DELETE /tags/{tag_id} - Delete tag
+
+  Reminders
+
+  - GET /tasks/{task_id}/reminders - List reminders for task
+  - POST /tasks/{task_id}/reminders - Create reminder for task
+  - PUT /reminders/{reminder_id} - Update reminder
+  - DELETE /reminders/{reminder_id} - Delete reminder
+
