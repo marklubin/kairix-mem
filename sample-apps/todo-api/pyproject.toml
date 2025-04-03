@@ -10,11 +10,15 @@ requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.100.0",
     "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
     "sqlalchemy>=2.0.0",
     "alembic>=1.10.0", 
     "uvicorn>=0.22.0",
     "pytest>=7.3.1",
     "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.0",
+    "aiosqlite>=0.18.0",
+    "asyncpg>=0.27.0",
 ]
 
 
@@ -40,6 +44,9 @@ warn_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[project.scripts]
+todo-api = "todo_api.main:app"
+
 [tool.scripts]
 lint = "black . && isort ."
 typecheck = "mypy src/todo_api/"
@@ -47,5 +54,6 @@ test = "pytest tests/ --cov=todo_api --cov-report=term-missing"
 test-models = "pytest tests/models/ -v"
 test-task = "pytest tests/models/test_task.py -v"
 test-tag = "pytest tests/models/test_tag.py -v"
+test-reminder = "pytest tests/models/test_reminder.py -v"
 dev = "uvicorn todo_api.main:app --reload"
 precheck = "black . --check && isort . --check-only && mypy src/todo_api/ && pytest tests/"
